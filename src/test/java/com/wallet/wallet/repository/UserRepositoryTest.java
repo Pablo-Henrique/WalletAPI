@@ -53,7 +53,7 @@ public class UserRepositoryTest {
         assertNotNull(response);
     }
 
-    public void testFindByEmail() {
+    public void testFindByEmailEquals() {
         Optional<UserEntity> response = userRepository.findByEmailEquals(EMAIL);
         assertTrue(response.isPresent());
         assertEquals(response.get().getEmail(), EMAIL);
