@@ -1,19 +1,20 @@
 package com.wallet.wallet.models;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Table(name = "USER")
+@Table(name = "_USER")
 public class UserEntity implements Serializable {
 
     @Serial
@@ -22,15 +23,15 @@ public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false, unique = true)
-    private UUID id;
+    private Long id;
 
-    @Column(name = "NAME", length = 30, nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "PASSWORD", length = 15, nullable = false)
+    @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @Column(name = "EMAIL", unique = true, nullable = false, length = 30)
+    @Column(name = "EMAIL", nullable = false)
     private String email;
 
     @Override
