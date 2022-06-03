@@ -1,6 +1,6 @@
 package com.wallet.wallet.services;
 
-import com.wallet.wallet.models.UserEntity;
+import com.wallet.wallet.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -8,6 +8,6 @@ import java.util.Optional;
 @Service
 public interface UserService {
 
-    UserEntity save(UserEntity user);
-    Optional<UserEntity> findByEmail(String email);
+    User save(User user);
+    Optional<User> findByEmail(String email);
 }

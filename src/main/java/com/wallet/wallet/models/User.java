@@ -1,5 +1,6 @@
 package com.wallet.wallet.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,14 +15,15 @@ import java.util.Objects;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Table(name = "_USER")
-public class UserEntity implements Serializable {
+@AllArgsConstructor
+@Table(name = "TB_USER")
+public class User implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -3613421546601364180L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false, unique = true)
     private Long id;
 
@@ -38,7 +40,7 @@ public class UserEntity implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UserEntity that = (UserEntity) o;
+        User that = (User) o;
         return id != null && Objects.equals(id, that.id);
     }
 

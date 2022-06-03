@@ -1,6 +1,6 @@
 package com.wallet.wallet.services;
 
-import com.wallet.wallet.models.UserEntity;
+import com.wallet.wallet.models.User;
 import com.wallet.wallet.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,12 +31,12 @@ public class UserServiceTest {
 
     @Before
     public void setUp() {
-        BDDMockito.given(userRepository.findByEmailEquals(Mockito.anyString())).willReturn(Optional.of(new UserEntity()));
+        BDDMockito.given(userRepository.findByEmailEquals(Mockito.anyString())).willReturn(Optional.of(new User()));
     }
 
     @Test
     public void testFindByEmail() {
-        Optional<UserEntity> user = userService.findByEmail("");
+        Optional<User> user = userService.findByEmail("");
         assertTrue(user.isPresent());
         assertNotNull(user);
     }

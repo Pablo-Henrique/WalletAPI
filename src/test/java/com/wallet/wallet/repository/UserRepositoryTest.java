@@ -1,6 +1,6 @@
 package com.wallet.wallet.repository;
 
-import com.wallet.wallet.models.UserEntity;
+import com.wallet.wallet.models.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class UserRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        UserEntity user = new UserEntity();
+        User user = new User();
         user.setName("Set up User");
         user.setPassword("Senha123");
         user.setEmail(EMAIL);
@@ -44,17 +44,17 @@ public class UserRepositoryTest {
     @Test
     @Transactional
     public void testSave() {
-        UserEntity user = new UserEntity();
+        User user = new User();
         user.setName("Test");
         user.setEmail("test@gmail.com");
         user.setPassword("15221");
 
-        UserEntity response = userRepository.save(user);
+        User response = userRepository.save(user);
         assertNotNull(response);
     }
 
     public void testFindByEmailEquals() {
-        Optional<UserEntity> response = userRepository.findByEmailEquals(EMAIL);
+        Optional<User> response = userRepository.findByEmailEquals(EMAIL);
         assertTrue(response.isPresent());
         assertEquals(response.get().getEmail(), EMAIL);
     }

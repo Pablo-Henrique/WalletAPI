@@ -1,6 +1,6 @@
 package com.wallet.wallet.services.impl;
 
-import com.wallet.wallet.models.UserEntity;
+import com.wallet.wallet.models.User;
 import com.wallet.wallet.repository.UserRepository;
 import com.wallet.wallet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public UserEntity save(UserEntity user) {
+    public User save(User user) {
         return userRepository.save(user);
     }
 
     @Override
-    public Optional<UserEntity> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmailEquals(email);
     }
 }
