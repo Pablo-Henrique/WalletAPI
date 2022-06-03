@@ -18,8 +18,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -49,19 +49,21 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id").value(ID))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.name").value(NAME))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.password").value(PASSWORD))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.email").value(EMAIL));
+                .andExpect(jsonPath("$.data.id").doesNotExist())
+                .andExpect(jsonPath("$.data.email").value(EMAIL))
+                .andExpect(jsonPath("$.data.name").value(NAME))
+                .andExpect(jsonPath("$.data.password").doesNotExist());
     }
 
     @Test
     public void testSaveInvalidUser() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayLoad(ID, NAME, PASSWORD, "email"))
+
+        mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayLoad(ID, NAME, PASSWORD, "notEMAIL"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0]").value("Email Inválido"));
+                .andExpect(jsonPath("$.errors[0]").value("Email Inválido"));
+
     }
 
     public User getMockUser() {

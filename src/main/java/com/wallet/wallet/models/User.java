@@ -16,7 +16,7 @@ import java.util.Objects;
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Table(name = "TB_USER")
+@Table(name = "users")
 public class User implements Serializable {
 
     @Serial
@@ -24,7 +24,6 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false, unique = true)
     private Long id;
 
     @Column(name = "NAME", nullable = false)
