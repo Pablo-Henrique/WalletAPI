@@ -1,4 +1,4 @@
-package com.wallet.wallet.models;
+package com.wallet.wallet.domain.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

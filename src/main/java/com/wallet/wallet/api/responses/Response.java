@@ -1,4 +1,4 @@
-package com.wallet.wallet.responses;
+package com.wallet.wallet.api.responses;
 
 
 import lombok.Getter;

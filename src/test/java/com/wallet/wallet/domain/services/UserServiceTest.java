@@ -1,7 +1,8 @@
-package com.wallet.wallet.services;
+package com.wallet.wallet.domain.services;
 
-import com.wallet.wallet.models.User;
-import com.wallet.wallet.repository.UserRepository;
+import com.wallet.wallet.domain.models.User;
+import com.wallet.wallet.domain.repository.UserRepository;
+import com.wallet.wallet.domain.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

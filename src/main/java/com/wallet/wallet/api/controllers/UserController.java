@@ -1,12 +1,11 @@
-package com.wallet.wallet.controllers;
+package com.wallet.wallet.api.controllers;
 
 
-import com.wallet.wallet.dtos.UserDto;
-import com.wallet.wallet.models.User;
-import com.wallet.wallet.responses.Response;
-import com.wallet.wallet.services.UserService;
-import com.wallet.wallet.util.Bcrypt;
-import org.modelmapper.ModelMapper;
+import com.wallet.wallet.api.dtos.UserDto;
+import com.wallet.wallet.api.mappers.UserMapper;
+import com.wallet.wallet.api.responses.Response;
+import com.wallet.wallet.domain.models.User;
+import com.wallet.wallet.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +25,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private UserMapper mapper;
 
     @PostMapping
     public ResponseEntity<Response<UserDto>> createUser(@RequestBody @Valid UserDto userDto, BindingResult result) {
@@ -37,25 +36,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        User user = userService.save(converterDtoToEntity(userDto));
-        response.setData(converterEntityToDto(user));
+        User user = userService.save(mapper.converterDtoToEntity(userDto));
+        response.setData(mapper.dtoResponse(user));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
-    private User converterDtoToEntity(UserDto dto) {
-        User u = new User();
-        u.setId(dto.getId());
-        u.setEmail(dto.getEmail());
-        u.setName(dto.getName());
-        u.setPassword(Bcrypt.getHash(dto.getPassword()));
-        return u;
-    }
-
-    private UserDto converterEntityToDto(User u) {
-        UserDto dto = new UserDto();
-        dto.setEmail(u.getEmail());
-        dto.setName(u.getName());
-        return dto;
     }
 }

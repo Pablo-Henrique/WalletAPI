@@ -1,8 +1,8 @@
-package com.wallet.wallet.services.impl;
+package com.wallet.wallet.domain.services.impl;
 
-import com.wallet.wallet.models.User;
-import com.wallet.wallet.repository.UserRepository;
-import com.wallet.wallet.services.UserService;
+import com.wallet.wallet.domain.models.User;
+import com.wallet.wallet.domain.repository.UserRepository;
+import com.wallet.wallet.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,10 @@
-package com.wallet.wallet.controllers;
+package com.wallet.wallet.api.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wallet.wallet.dtos.UserDto;
-import com.wallet.wallet.models.User;
-import com.wallet.wallet.services.UserService;
+import com.wallet.wallet.api.dtos.UserDto;
+import com.wallet.wallet.domain.models.User;
+import com.wallet.wallet.domain.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;

@@ -1,6 +1,6 @@
-package com.wallet.wallet.services;
+package com.wallet.wallet.domain.services;
 
-import com.wallet.wallet.models.User;
+import com.wallet.wallet.domain.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

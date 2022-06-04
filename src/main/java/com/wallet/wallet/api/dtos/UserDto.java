@@ -1,4 +1,4 @@
-package com.wallet.wallet.dtos;
+package com.wallet.wallet.api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
