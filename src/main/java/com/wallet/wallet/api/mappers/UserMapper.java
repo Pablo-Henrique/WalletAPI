@@ -22,7 +22,7 @@ public class UserMapper {
         return modelMapper.map(entity, UserDto.class);
     }
 
-    public UserDto dtoResponse(User user) {
+    public UserDto response(User user) {
         UserDto userDto = new UserDto();
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());

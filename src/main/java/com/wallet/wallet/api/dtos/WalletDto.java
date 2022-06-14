@@ -13,13 +13,13 @@ import java.math.BigDecimal;
 @Getter
 public class WalletDto implements Serializable {
 
-    private final Long id;
+    private Long id;
 
-    @Length(min = 3)
-    @NotNull
-    private final String name;
+    @NotNull(message = "O nome não deve ser nulo")
+    @Length(min = 3, message = "O nome deve conter no mínimo 3 caracteres!")
+    private String name;
 
-    @NotNull
-    private final BigDecimal value;
+    @NotNull(message = "Insira um valor para a carteira!")
+    private BigDecimal value;
 
 }

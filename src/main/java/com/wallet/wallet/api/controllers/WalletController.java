@@ -1,11 +1,10 @@
 package com.wallet.wallet.api.controllers;
 
-
-import com.wallet.wallet.api.dtos.UserDto;
-import com.wallet.wallet.api.mappers.UserMapper;
+import com.wallet.wallet.api.dtos.WalletDto;
+import com.wallet.wallet.api.mappers.WalletMapper;
 import com.wallet.wallet.api.responses.Response;
-import com.wallet.wallet.domain.models.User;
-import com.wallet.wallet.domain.services.UserService;
+import com.wallet.wallet.domain.models.Wallet;
+import com.wallet.wallet.domain.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,27 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/user")
-public class UserController {
+@RequestMapping(path = "/wallet")
+public class WalletController {
 
     @Autowired
-    private UserService userService;
+    private WalletService walletService;
 
     @Autowired
-    private UserMapper mapper;
+    private WalletMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Response<UserDto>> createUser(@RequestBody @Valid UserDto userDto, BindingResult result) {
-        Response<UserDto> response = new Response<>();
+    public ResponseEntity<Response<WalletDto>> createWallet(@RequestBody @Valid WalletDto walletDto, BindingResult result) {
+        Response<WalletDto> response = new Response<>();
 
         if (result.hasErrors()) {
             result.getAllErrors().forEach(errors -> response.getErrors().add(errors.getDefaultMessage()));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        User user = userService.save(mapper.converterDtoToEntity(userDto));
-        response.setData(mapper.response(user));
+        Wallet wallet = walletService.save(mapper.converterDtoToEntity(walletDto));
+        response.setData(mapper.converterEntityToDto(wallet));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 }
