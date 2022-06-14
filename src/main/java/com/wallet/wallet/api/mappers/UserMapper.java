@@ -2,6 +2,7 @@ package com.wallet.wallet.api.mappers;
 
 import com.wallet.wallet.api.dtos.UserDto;
 import com.wallet.wallet.domain.models.User;
+import com.wallet.wallet.domain.util.Bcrypt;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class UserMapper {
     private ModelMapper modelMapper;
 
     public User converterDtoToEntity(UserDto dto) {
+        dto.setPassword(Bcrypt.getHash(dto.getPassword()));
         return modelMapper.map(dto, User.class);
     }
 
