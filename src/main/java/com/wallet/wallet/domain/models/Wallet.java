@@ -1,7 +1,7 @@
 package com.wallet.wallet.domain.models;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -30,6 +30,11 @@ public class Wallet implements Serializable {
 
     @Column(nullable = false)
     private BigDecimal value;
+
+    public Wallet(String name, BigDecimal value) {
+        this.name = name;
+        this.value = value;
+    }
 
     @Override
     public boolean equals(Object o) {

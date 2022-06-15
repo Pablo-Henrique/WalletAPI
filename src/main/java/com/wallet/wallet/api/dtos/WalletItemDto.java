@@ -3,6 +3,7 @@ package com.wallet.wallet.api.dtos;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -16,6 +17,7 @@ public class WalletItemDto implements Serializable {
     private Date date;
 
     @NotNull(message = "Informe um tipo")
+    @Pattern(regexp = "^(ENTRADA|SAÍDA)$", message = "Para o tipo somente são aceitos ETNRADA E SAÍDA")
     private String type;
 
     @NotNull(message = "Informe uma descrição!")

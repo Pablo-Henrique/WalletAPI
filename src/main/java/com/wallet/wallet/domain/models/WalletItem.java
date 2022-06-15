@@ -1,16 +1,19 @@
 package com.wallet.wallet.domain.models;
 
-import lombok.*;
+import com.wallet.wallet.domain.enums.TypeEnum;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -28,8 +31,9 @@ public class WalletItem implements Serializable {
     @Column(nullable = false)
     private Date date;
 
-    @Column(nullable = false)
-    private String type;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TypeEnum type;
 
     @Column(nullable = false)
     private String description;
@@ -40,6 +44,14 @@ public class WalletItem implements Serializable {
     @JoinColumn(name = "wallet", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Wallet wallet;
+
+    public WalletItem(Date date, TypeEnum type, String description, BigDecimal value, Wallet wallet) {
+        this.date = date;
+        this.type = type;
+        this.description = description;
+        this.value = value;
+        this.wallet = wallet;
+    }
 
     @Override
     public boolean equals(Object o) {
