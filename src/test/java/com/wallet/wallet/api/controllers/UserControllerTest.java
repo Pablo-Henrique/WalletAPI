@@ -43,9 +43,9 @@ public class UserControllerTest {
     @Test
     public void testSave() throws Exception {
 
-        BDDMockito.given(userService.save(Mockito.any(User.class))).willReturn(getMockUser());
+        BDDMockito.given(userService.save(Mockito.any(User.class))).willReturn(mockUser());
 
-        mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayLoad(ID, NAME, PASSWORD, EMAIL))
+        mvc.perform(MockMvcRequestBuilders.post(URL).content(jsonPayLoad(ID, NAME, PASSWORD, EMAIL))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -58,7 +58,7 @@ public class UserControllerTest {
     @Test
     public void testSaveInvalidUser() throws Exception {
 
-        mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayLoad(ID, NAME, PASSWORD, "notEMAIL"))
+        mvc.perform(MockMvcRequestBuilders.post(URL).content(jsonPayLoad(ID, NAME, PASSWORD, "notEMAIL"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -66,7 +66,7 @@ public class UserControllerTest {
 
     }
 
-    public User getMockUser() {
+    public User mockUser() {
         User user = new User();
         user.setId(ID);
         user.setEmail(EMAIL);
@@ -75,7 +75,7 @@ public class UserControllerTest {
         return user;
     }
 
-    public String getJsonPayLoad(Long id, String name, String password, String email) throws JsonProcessingException {
+    public String jsonPayLoad(Long id, String name, String password, String email) throws JsonProcessingException {
         UserDto dto = new UserDto();
         dto.setId(id);
         dto.setName(name);
