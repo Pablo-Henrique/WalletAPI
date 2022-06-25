@@ -14,11 +14,11 @@ public interface WalletItemService {
     WalletItem save(WalletItem walletItem);
     Page<WalletItem> findBetweenDates(Long id, Date initial, Date end, int page);
 
-    List<WalletItem> findByWalletAndType(long l, TypeEnum en);
+    List<WalletItem> findByWalletAndType(long id, TypeEnum en);
 
-    BigDecimal sumByWalletId(long l);
+    BigDecimal sumByWalletId(long id);
 
-    Optional<WalletItem> findById(long anyLong);
+    Optional<WalletItem> findById(long id);
 
     void deleteById(Long id);
 
