@@ -45,6 +45,15 @@ public class WalletItem implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Wallet wallet;
 
+    public WalletItem(Long id, Date date, TypeEnum type, String description, BigDecimal value, Wallet wallet) {
+        this.id = id;
+        this.date = date;
+        this.type = type;
+        this.description = description;
+        this.value = value;
+        this.wallet = wallet;
+    }
+
     public WalletItem(Date date, TypeEnum type, String description, BigDecimal value, Wallet wallet) {
         this.date = date;
         this.type = type;

@@ -1,7 +1,6 @@
 package com.wallet.wallet.api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -14,7 +13,6 @@ import java.util.Date;
 @Data
 public class WalletItemDto implements Serializable {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @NotNull(message = "Informe uma data")
@@ -22,7 +20,7 @@ public class WalletItemDto implements Serializable {
     private Date date;
 
     @NotNull(message = "Informe um tipo")
-    @Pattern(regexp = "^(ENTRADA|SAÍDA)$", message = "Para o tipo somente são aceitos ETNRADA E SAÍDA")
+    @Pattern(regexp = "^(ENTRADA|SAÍDA)$", message = "Para o tipo somente são aceitos os valores ENTRADA ou SAÍDA")
     private String type;
 
     @NotNull(message = "Informe uma descrição!")

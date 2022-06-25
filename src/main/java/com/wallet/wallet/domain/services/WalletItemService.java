@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface WalletItemService {
 
     WalletItem save(WalletItem walletItem);
+
     Page<WalletItem> findBetweenDates(Long id, Date initial, Date end, int page);
 
     List<WalletItem> findByWalletAndType(long id, TypeEnum en);

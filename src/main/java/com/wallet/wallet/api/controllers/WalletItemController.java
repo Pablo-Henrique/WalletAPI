@@ -3,6 +3,7 @@ package com.wallet.wallet.api.controllers;
 import com.wallet.wallet.api.dtos.WalletItemDto;
 import com.wallet.wallet.api.responses.Response;
 import com.wallet.wallet.domain.enums.TypeEnum;
+import com.wallet.wallet.domain.models.Wallet;
 import com.wallet.wallet.domain.models.WalletItem;
 import com.wallet.wallet.domain.services.WalletItemService;
 import org.modelmapper.ModelMapper;
@@ -41,8 +42,8 @@ public class WalletItemController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        WalletItem walletItem = service.save(mapper.map(dto, WalletItem.class));
-        response.setData(mapper.map(walletItem, WalletItemDto.class));
+        WalletItem walletItem = service.save(convertDtoToEntity(dto));
+        response.setData(convertEntityToDto(walletItem));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -55,20 +56,23 @@ public class WalletItemController {
             @RequestParam(name = "page", defaultValue = "0") int page) {
 
         Response<Page<WalletItemDto>> response = new Response<>();
+
         Page<WalletItem> items = service.findBetweenDates(wallet, startDate, endDate, page);
-        Page<WalletItemDto> dto = items.map(i -> mapper.map(i, WalletItemDto.class));
+        Page<WalletItemDto> dto = items.map(this::convertEntityToDto);
+
         response.setData(dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping(path = "/{wallet}")
+    @GetMapping(path = "/type/{wallet}")
     public ResponseEntity<Response<List<WalletItemDto>>> findByWalletAndType(@PathVariable(value = "wallet") Long wallet,
-                                                                             @RequestParam("Type") String type) {
+                                                                             @RequestParam("type") String type) {
         Response<List<WalletItemDto>> response = new Response<>();
         List<WalletItem> walletItems = service.findByWalletAndType(wallet, TypeEnum.getEnum(type));
 
         List<WalletItemDto> dto = new ArrayList<>();
-        walletItems.forEach(items -> dto.add(mapper.map(items, WalletItemDto.class)));
+        walletItems.forEach(items -> dto.add(convertEntityToDto(items)));
+
         response.setData(dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -89,7 +93,7 @@ public class WalletItemController {
         Optional<WalletItem> walletItem = service.findById(dto.getId());
 
         if (walletItem.isEmpty()) {
-            result.addError(new ObjectError("WalletItem", "WalletItem não encontrado"));
+            result.addError(new ObjectError("WalletItem", "WalletItem nao encontrado"));
         } else if (walletItem.get().getWallet().getId().compareTo(dto.getWallet()) != 0) {
             result.addError(new ObjectError("WalletItemChanged", "Você não pode alterar a carteira"));
         }
@@ -98,9 +102,8 @@ public class WalletItemController {
             result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
-        WalletItem newWalletItem = service.save(mapper.map(dto, WalletItem.class));
-        response.setData(mapper.map(newWalletItem, WalletItemDto.class));
+        WalletItem newWalletItem = service.save(convertDtoToEntity(dto));
+        response.setData(convertEntityToDto(newWalletItem));
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -111,14 +114,41 @@ public class WalletItemController {
         Optional<WalletItem> walletItem = service.findById(walletItemId);
 
         if (walletItem.isEmpty()) {
-            response.getErrors().add("Carteira de id " + walletItemId + " não encontrado");
+            response.getErrors().add("WalletItem de id " + walletItemId + " nao encontrada");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
         service.deleteById(walletItemId);
-        response.setData("Carteira de id " + walletItemId + " apagada com sucesso");
+        response.setData("WalletItem de id " + walletItemId + " apagada com sucesso");
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+
+    private WalletItem convertDtoToEntity(WalletItemDto dto) {
+        WalletItem wi = new WalletItem();
+        wi.setDate(dto.getDate());
+        wi.setDescription(dto.getDescription());
+        wi.setId(dto.getId());
+        wi.setType(TypeEnum.getEnum(dto.getType()));
+        wi.setValue(dto.getValue());
+
+        Wallet w = new Wallet();
+        w.setId(dto.getWallet());
+        wi.setWallet(w);
+
+        return wi;
+    }
+
+    private WalletItemDto convertEntityToDto(WalletItem wi) {
+        WalletItemDto dto = new WalletItemDto();
+        dto.setDate(wi.getDate());
+        dto.setDescription(wi.getDescription());
+        dto.setId(wi.getId());
+        dto.setType(wi.getType().getValue());
+        dto.setValue(wi.getValue());
+        dto.setWallet(wi.getWallet().getId());
+
+        return dto;
+    }
 }

@@ -17,6 +17,7 @@ import java.util.List;
 public interface WalletItemRepository extends JpaRepository<WalletItem, Long> {
 
     Page<WalletItem> findByWalletIdAndDateGreaterThanEqualAndDateLessThanEqual(Long id, Date init, Date end, Pageable pg);
+
     List<WalletItem> findByWalletIdAndType(Long id, TypeEnum typeEnum);
 
     @Query(value = "select sum(value) from WalletItem wi where wi.wallet.id = :wallet")
