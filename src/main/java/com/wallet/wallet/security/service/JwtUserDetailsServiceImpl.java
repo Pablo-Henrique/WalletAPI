@@ -1,6 +1,7 @@
 package com.wallet.wallet.security.service;
 
 import com.wallet.wallet.models.User;
+import com.wallet.wallet.security.JwtUserFactory;
 import com.wallet.wallet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -4,8 +4,12 @@ import com.wallet.wallet.dtos.WalletDto;
 import com.wallet.wallet.models.Wallet;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +24,12 @@ public class WalletMapper {
 
     public WalletDto converterEntityToDto(Wallet entity) {
         return modelMapper.map(entity, WalletDto.class);
+    }
+
+    public List<WalletDto> listConveterEntityToDto(List<Wallet>  wallets){
+        List<WalletDto> walletDtos = new ArrayList<>();
+        BeanUtils.copyProperties(wallets, walletDtos);
+        return walletDtos;
     }
 
     public WalletDto response(Wallet wallet) {

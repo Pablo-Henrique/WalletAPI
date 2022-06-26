@@ -2,19 +2,17 @@ package com.wallet.wallet.controllers;
 
 import com.wallet.wallet.dtos.WalletDto;
 import com.wallet.wallet.mappers.WalletMapper;
-import com.wallet.wallet.responses.Response;
 import com.wallet.wallet.models.Wallet;
+import com.wallet.wallet.responses.Response;
 import com.wallet.wallet.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/wallet")
@@ -39,6 +37,15 @@ public class WalletController {
         response.setData(mapper.converterEntityToDto(wallet));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<Response<List<WalletDto>>> findAll() {
+        Response<List<WalletDto>> response = new Response<>();
+
+        List<WalletDto> wallets = mapper.listConveterEntityToDto(walletService.findAll());
+        response.setData(wallets);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 }
