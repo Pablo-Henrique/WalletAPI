@@ -26,7 +26,7 @@ public class UserWalletMapper {
         wallet.setId(dto.getWallet());
 
         userWallet.setId(dto.getId());
-        userWallet.setUser(user);
+        userWallet.setUsers(user);
         userWallet.setWallet(wallet);
 
         return userWallet;
@@ -35,7 +35,7 @@ public class UserWalletMapper {
     public UserWalletDto converterEntityToDto(UserWallet entity) {
         UserWalletDto userWalletDto = new UserWalletDto();
         userWalletDto.setId(entity.getId());
-        userWalletDto.setUser(entity.getUser().getId());
+        userWalletDto.setUser(entity.getUsers().getId());
         userWalletDto.setWallet(entity.getWallet().getId());
         return userWalletDto;
     }

@@ -20,7 +20,7 @@ public class UserWalletServiceImpl implements UserWalletService {
     }
 
     @Override
-    public Optional<UserWallet> findByUsersIdAndWalletId(Long userId, Long walletId) {
-        return repository.findByUsersIdAndWalletId(userId, walletId);
+    public Optional<UserWallet> findByUserIdAndWalletId(Long user, Long wallet) {
+        return repository.findByUsersIdAndWalletId(user, wallet);
     }
 }

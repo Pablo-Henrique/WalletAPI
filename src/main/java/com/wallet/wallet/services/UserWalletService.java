@@ -8,5 +8,5 @@ public interface UserWalletService {
 
     UserWallet save(UserWallet userWallet);
 
-    Optional<UserWallet> findByUsersIdAndWalletId(Long userId, Long walletId);
+    Optional<UserWallet> findByUserIdAndWalletId(Long userId, Long walletId);
 }

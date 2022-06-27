@@ -26,7 +26,7 @@ public class UserWallet implements Serializable {
 
     @JoinColumn(name = "users", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User users;
 
     @JoinColumn(name = "wallet", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)

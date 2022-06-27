@@ -2,7 +2,6 @@ package com.wallet.wallet.util;
 
 import com.wallet.wallet.models.User;
 import com.wallet.wallet.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +10,12 @@ import java.util.Optional;
 @Component
 public class RestrictByUserUtil {
 
-    @Autowired
+
     private static UserService service;
+
+    public RestrictByUserUtil(UserService service) {
+        RestrictByUserUtil.service = service;
+    }
 
     public static Long getAuthenticatedUserId() {
         try {
