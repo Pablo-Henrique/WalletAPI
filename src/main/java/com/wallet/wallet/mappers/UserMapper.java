@@ -8,6 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class UserMapper {
@@ -24,11 +27,10 @@ public class UserMapper {
         return modelMapper.map(entity, UserDto.class);
     }
 
-    public UserDto response(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setName(user.getName());
-        userDto.setEmail(user.getEmail());
-        return userDto;
+    public List<UserDto> converterListEntityToDto(List<User> entityList) {
+        List<UserDto> dtoList = new ArrayList<>();
+        entityList.forEach(entity -> dtoList.add(converterEntityToDto(entity)));
+        return dtoList;
     }
 
 }

@@ -1,6 +1,5 @@
 package com.wallet.wallet.models;
 
-import com.wallet.wallet.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -37,9 +35,9 @@ public class User implements Serializable {
     @Column(name = "EMAIL", nullable = false)
     private String email;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private RoleEnum role;
+//    @NotNull
+//    @Enumerated(EnumType.STRING)
+//    private RoleEnum role;
 
     @Override
     public boolean equals(Object o) {

@@ -14,10 +14,10 @@ import java.util.Map;
 @Component
 public class JwtTokenUtil {
 
-    private static final String CLAIM_KEY_USERNAME = "sub";
-    private static final String CLAIM_KEY_ROLE = "role";
-    private static final String CLAIM_KEY_AUDIENCE = "audience";
-    private static final String CLAIM_KEY_CREATED = "created";
+    static final String CLAIM_KEY_USERNAME = "sub";
+    static final String CLAIM_KEY_ROLE = "role";
+    static final String CLAIM_KEY_AUDIENCE = "audience";
+    static final String CLAIM_KEY_CREATED = "created";
 
     @Value("${jwt.secret}")
     private String secret;
@@ -27,28 +27,24 @@ public class JwtTokenUtil {
 
     public String getUsernameFromToken(String token) {
         String username;
-
         try {
             Claims claims = getClaimsFromToken(token);
             username = claims.getSubject();
         } catch (Exception e) {
             username = null;
-            e.printStackTrace();
         }
         return username;
     }
 
     public Date getExpirationDateFromToken(String token) {
         Date expiration;
-
-        try{
+        try {
             Claims claims = getClaimsFromToken(token);
             expiration = claims.getExpiration();
         } catch (Exception e) {
             expiration = null;
-            e.printStackTrace();
         }
-        return  expiration;
+        return expiration;
     }
 
     public boolean validToken(String token) {
@@ -59,11 +55,9 @@ public class JwtTokenUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
         claims.put(CLAIM_KEY_CREATED, new Date());
-        userDetails.getAuthorities().forEach(authority -> claims.put(CLAIM_KEY_ROLE, authority.getAuthority()));
 
         return generateToken(claims);
     }
-
 
     private Claims getClaimsFromToken(String token) {
         Claims claims;
@@ -75,11 +69,9 @@ public class JwtTokenUtil {
         return claims;
     }
 
-
     private Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);
     }
-
 
     private boolean expiredToken(String token) {
         Date expirationDate = this.getExpirationDateFromToken(token);
@@ -88,7 +80,6 @@ public class JwtTokenUtil {
         }
         return expirationDate.before(new Date());
     }
-
 
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder().setClaims(claims).setExpiration(generateExpirationDate())
