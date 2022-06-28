@@ -26,7 +26,7 @@ public class WalletItemServiceImpl implements WalletItemService {
     @Value("${pagination.items_per_page}")
     private Integer itemsPerPage;
 
-    @CacheEvict
+    @CacheEvict(value = "findByWalletAndType", allEntries = true)
     @Override
     public WalletItem save(WalletItem walletItem) {
         return walletItemRepository.save(walletItem);
@@ -54,7 +54,7 @@ public class WalletItemServiceImpl implements WalletItemService {
         return walletItemRepository.findById(id);
     }
 
-    @CacheEvict
+    @CacheEvict(value = "findByWalletAndType", allEntries = true)
     @Override
     public void deleteById(Long id) {
         walletItemRepository.deleteById(id);
