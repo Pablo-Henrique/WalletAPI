@@ -6,6 +6,8 @@ import com.wallet.wallet.repository.WalletItemRepository;
 import com.wallet.wallet.services.WalletItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class WalletItemImpl implements WalletItemService {
+public class WalletItemServiceImpl implements WalletItemService {
 
     @Autowired
     private WalletItemRepository walletItemRepository;
@@ -24,6 +26,7 @@ public class WalletItemImpl implements WalletItemService {
     @Value("${pagination.items_per_page}")
     private Integer itemsPerPage;
 
+    @CacheEvict
     @Override
     public WalletItem save(WalletItem walletItem) {
         return walletItemRepository.save(walletItem);
@@ -35,6 +38,7 @@ public class WalletItemImpl implements WalletItemService {
         return walletItemRepository.findByWalletIdAndDateGreaterThanEqualAndDateLessThanEqual(id, initial, end, pageRequest);
     }
 
+    @Cacheable(value = "findByWalletAndType")
     @Override
     public List<WalletItem> findByWalletAndType(long id, TypeEnum en) {
         return walletItemRepository.findByWalletIdAndType(id, en);
@@ -50,6 +54,7 @@ public class WalletItemImpl implements WalletItemService {
         return walletItemRepository.findById(id);
     }
 
+    @CacheEvict
     @Override
     public void deleteById(Long id) {
         walletItemRepository.deleteById(id);
