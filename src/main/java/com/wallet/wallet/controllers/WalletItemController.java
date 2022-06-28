@@ -1,15 +1,17 @@
 package com.wallet.wallet.controllers;
 
 import com.wallet.wallet.dtos.WalletItemDto;
-import com.wallet.wallet.models.UserWallet;
-import com.wallet.wallet.responses.Response;
 import com.wallet.wallet.enums.TypeEnum;
+import com.wallet.wallet.models.UserWallet;
 import com.wallet.wallet.models.Wallet;
 import com.wallet.wallet.models.WalletItem;
+import com.wallet.wallet.responses.Response;
 import com.wallet.wallet.services.UserWalletService;
 import com.wallet.wallet.services.WalletItemService;
 import com.wallet.wallet.util.RestrictByUserUtil;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,6 +40,8 @@ public class WalletItemController {
 
     @Autowired
     private ModelMapper mapper;
+
+    private static final Logger log = LoggerFactory.getLogger(WalletItemController.class);
 
     @PostMapping
     public ResponseEntity<Response<WalletItemDto>> create(@RequestBody @Valid WalletItemDto dto, BindingResult result) {
@@ -80,8 +84,10 @@ public class WalletItemController {
     @GetMapping(path = "/type/{wallet}")
     public ResponseEntity<Response<List<WalletItemDto>>> findByWalletAndType(@PathVariable(value = "wallet") Long wallet,
                                                                              @RequestParam("type") String type) {
-        Response<List<WalletItemDto>> response = new Response<>();
 
+        log.info("Buscando por carteira {} e tipo {}", wallet, type);
+
+        Response<List<WalletItemDto>> response = new Response<>();
         List<WalletItem> walletItems = walletItemService.findByWalletAndType(wallet, TypeEnum.getEnum(type));
 
         List<WalletItemDto> dto = new ArrayList<>();
