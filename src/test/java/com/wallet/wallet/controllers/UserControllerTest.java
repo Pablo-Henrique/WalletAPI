@@ -1,6 +1,7 @@
 package com.wallet.wallet.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wallet.wallet.dtos.UserDto;
 import com.wallet.wallet.models.User;
@@ -29,13 +30,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest {
 
     private static final Long ID = 1L;
-    private static final String NAME = "USER TEST";
-    private static final String EMAIL = "email@test.com";
-    private static final String PASSWORD = "123456";
+    private static final String EMAIL = "test.email@hotmail.com";
+    private static final String NAME = "usuario Test";
+    private static final String PASSWORD = "123456789";
     private static final String URL = "/user";
 
     @MockBean
-    UserService userService;
+    UserService service;
 
     @Autowired
     MockMvc mvc;
@@ -43,22 +44,24 @@ public class UserControllerTest {
     @Test
     public void testSave() throws Exception {
 
-        BDDMockito.given(userService.save(Mockito.any(User.class))).willReturn(mockUser());
+        BDDMockito.given(service.save(Mockito.any(User.class))).willReturn(getMockUser());
 
-        mvc.perform(MockMvcRequestBuilders.post(URL).content(jsonPayLoad(ID, NAME, PASSWORD, EMAIL))
+        mvc.perform(MockMvcRequestBuilders.post(URL)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .content(getJsonPayload(ID, EMAIL, NAME, PASSWORD))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.id").doesNotExist())
+                .andExpect(jsonPath("$.data.id").exists())
                 .andExpect(jsonPath("$.data.email").value(EMAIL))
                 .andExpect(jsonPath("$.data.name").value(NAME))
                 .andExpect(jsonPath("$.data.password").doesNotExist());
+
     }
 
     @Test
     public void testSaveInvalidUser() throws Exception {
 
-        mvc.perform(MockMvcRequestBuilders.post(URL).content(jsonPayLoad(ID, NAME, PASSWORD, "notEMAIL"))
+        mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, "notEmail", NAME, PASSWORD))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -66,23 +69,25 @@ public class UserControllerTest {
 
     }
 
-    public User mockUser() {
-        User user = new User();
-        user.setId(ID);
-        user.setEmail(EMAIL);
-        user.setName(NAME);
-        user.setPassword(PASSWORD);
-        return user;
+    public User getMockUser() {
+        User u = new User();
+        u.setId(ID);
+        u.setEmail(EMAIL);
+        u.setName(NAME);
+        u.setPassword(PASSWORD);
+
+        return u;
     }
 
-    public String jsonPayLoad(Long id, String name, String password, String email) throws JsonProcessingException {
+    public String getJsonPayload(Long id, String email, String name, String password) throws JsonProcessingException {
         UserDto dto = new UserDto();
         dto.setId(id);
+        dto.setEmail(email);
         dto.setName(name);
         dto.setPassword(password);
-        dto.setEmail(email);
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(MapperFeature.USE_ANNOTATIONS);
         return mapper.writeValueAsString(dto);
     }
 }

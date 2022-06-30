@@ -40,7 +40,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping
     public ResponseEntity<Response<List<UserDto>>> findAll() {
         Response<List<UserDto>> response = new Response<>();
         response.setData(mapper.converterListEntityToDto(userService.findAll()));
