@@ -10,6 +10,5 @@ install:
   - mvn -N io.takari:maven:wrapper
 deploy:
   provider: heroku
-  api_key:
-    secure: $SECURE_KEY
+  api_key: $SECURE_KEY
   app: $APP
