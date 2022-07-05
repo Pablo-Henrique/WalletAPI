@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 @Data
 public class WalletDto implements Serializable {
 
+    private static final long serialVersionUID = -5751476943684913226L;
+
     private Long id;
 
     @NotNull(message = "O nome não deve ser nulo")

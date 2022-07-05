@@ -8,7 +8,6 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,7 +20,6 @@ import java.util.Objects;
 @Table(name = "wallet_items")
 public class WalletItem implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1125904030607085325L;
 
     @Id

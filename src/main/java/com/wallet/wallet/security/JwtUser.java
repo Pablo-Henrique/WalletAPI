@@ -3,17 +3,15 @@ package com.wallet.wallet.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serial;
 import java.util.Collection;
 
 public class JwtUser implements UserDetails {
 
-    @Serial
     private static final long serialVersionUID = -268046329085485932L;
 
-    private Long id;
-    private String username;
-    private String password;
+    private final Long id;
+    private final String username;
+    private final String password;
 
     public JwtUser(Long id, String username, String password) {
         this.id = id;

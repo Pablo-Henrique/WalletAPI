@@ -4,13 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serial;
 import java.io.Serializable;
 
 @Data
 public class UserWalletDto implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = -4056704019695471529L;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

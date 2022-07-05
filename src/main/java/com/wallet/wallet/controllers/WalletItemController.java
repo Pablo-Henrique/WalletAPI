@@ -69,7 +69,7 @@ public class WalletItemController {
 
         Optional<UserWallet> userWallet = userWalletService.findByUserIdAndWalletId(RestrictByUserUtil.getAuthenticatedUserId(), wallet);
 
-        if (userWallet.isEmpty()) {
+        if (!userWallet.isPresent()) {
             response.getErrors().add("Você não tem acesso a essa carteira");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
@@ -112,7 +112,7 @@ public class WalletItemController {
         Response<WalletItemDto> response = new Response<>();
         Optional<WalletItem> walletItem = walletItemService.findById(dto.getId());
 
-        if (walletItem.isEmpty()) {
+        if (!walletItem.isPresent()) {
             result.addError(new ObjectError("WalletItem", "WalletItem nao encontrado"));
         } else if (walletItem.get().getWallet().getId().compareTo(dto.getWallet()) != 0) {
             result.addError(new ObjectError("WalletItemChanged", "Você não pode alterar a carteira"));
@@ -133,7 +133,7 @@ public class WalletItemController {
         Response<String> response = new Response<>();
         Optional<WalletItem> walletItem = walletItemService.findById(walletItemId);
 
-        if (walletItem.isEmpty()) {
+        if (!walletItem.isPresent()) {
             response.getErrors().add("WalletItem de id " + walletItemId + " nao encontrada");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }

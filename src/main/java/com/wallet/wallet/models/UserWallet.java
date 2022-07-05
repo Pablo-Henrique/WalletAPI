@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -17,7 +16,6 @@ import java.util.Objects;
 @Table(name = "users_wallet")
 public class UserWallet implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = -4770799271493351868L;
 
     @Id

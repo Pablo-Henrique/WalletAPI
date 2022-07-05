@@ -1,10 +1,12 @@
 package com.wallet.wallet.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -16,7 +18,6 @@ import java.util.Objects;
 @Table(name = "users")
 public class User implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = -3613421546601364180L;
 
     @Id
@@ -44,6 +45,5 @@ public class User implements Serializable {
     public int hashCode() {
         return getClass().hashCode();
     }
-
 
 }

@@ -16,10 +16,6 @@
     <name>wallet</name>
     <description>API para controle de carteira</description>
 
-    <properties>
-        <java.version>18</java.version>
-    </properties>
-
     <dependencies>
 
         <dependency>
@@ -127,10 +123,18 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>3.0.4</version>
+            </plugin>
+
         </plugins>
     </build>
 
