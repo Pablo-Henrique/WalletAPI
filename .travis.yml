@@ -4,8 +4,12 @@ jdk:
   - oraclejdk18
 before_install:
   - export TZ=Brazil/East
+  - chmod +x mvnw
+install:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn -N io.takari:maven:wrapper
 deploy:
   provider: heroku
   api_key:
-    - secure: $SECURE_KEY
+    secure: $SECURE_KEY
   app: $APP
