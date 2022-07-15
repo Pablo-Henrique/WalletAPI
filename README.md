@@ -94,7 +94,7 @@ http://localhost:8080/swagger-ui.html
 
 - API estará disponivel na cloud do heroku: https://walletmanager-api.herokuapp.com/
 
-"Acesse a documentação para obter as rotas disponível"
+"Acesse a documentação para obter as rotas disponível https://walletmanager-api.herokuapp.com/swagger-ui.html"
 # Autor
 
 - Pablo Henrique Anselmo
