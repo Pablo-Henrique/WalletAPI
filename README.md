@@ -79,7 +79,7 @@ Agora você podera autenticar seu usuário e obter o token de acesso do tipo Bea
 
 
 # Executando todos os testes
-você podera executar os teste utilizando o seguinte comando no terminal dentro 
+você podera executar os teste utilizando o seguinte comando no terminal dentro da pasta do projeto
 
 ```bash
 ./mvnw test
