@@ -28,7 +28,6 @@ public class UserDto implements Serializable {
     @Length(min = 6, message = "A senha deve conter no mínimo 6 caracteres")
     private String password;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Pattern(regexp = "^(ROLE_ADMIN|ROLE_USER)$", message = "Para as Roles somente são aceitos os valores ROLE_ADMIN ou ROLE_USER")
     private String role;
 }
