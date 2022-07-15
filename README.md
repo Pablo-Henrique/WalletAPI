@@ -5,7 +5,7 @@
 
 # Sobre o projeto
 
-Wallet Manager é uma aplicação back-end construída durante meu aprendizado sobre Spring-boot, utilizando APi RESTFull utilizando TDD, CI E CD.
+Wallet Manager é uma aplicação back-end construída durante meu aprendizado sobre Spring-boot, utilizando APi RESTFull, TDD, CI E CD.
 
 A aplicação consiste em uma API de gerenciamento de carteiras, onde os usuarios poderão criar, modificar, deletar e inserir dados de maneira individual de uma carteira.  
 
