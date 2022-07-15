@@ -28,6 +28,6 @@ public class UserDto implements Serializable {
     @Length(min = 6, message = "A senha deve conter no mínimo 6 caracteres")
     private String password;
 
-    @Pattern(regexp = "^(ROLE_ADMIN|ROLE_USER)$", message = "Para as Roles somente são aceitos os valores ROLE_ADMIN ou ROLE_USER")
+    @Pattern(regexp = "^(ROLE_ADMIN|ROLE_USER|ROLE_DEFAULT)$", message = "Para as Roles somente são aceitos os valores ROLE_ADMIN, ROLE_USER ou ROLE_DEFAULT")
     private String role;
 }
