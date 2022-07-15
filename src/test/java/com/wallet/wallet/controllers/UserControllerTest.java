@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wallet.wallet.dtos.UserDto;
+import com.wallet.wallet.enums.RoleEnum;
 import com.wallet.wallet.models.User;
 import com.wallet.wallet.services.UserService;
 import org.junit.Test;
@@ -52,10 +53,10 @@ public class UserControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.id").exists())
-                .andExpect(jsonPath("$.data.email").value("fail test"))
+                .andExpect(jsonPath("$.data.email").value(EMAIL))
                 .andExpect(jsonPath("$.data.name").value(NAME))
-                .andExpect(jsonPath("$.data.password").doesNotExist());
-
+                .andExpect(jsonPath("$.data.password").doesNotExist())
+                .andExpect(jsonPath("$.data.role").exists());
     }
 
     @Test
@@ -70,13 +71,14 @@ public class UserControllerTest {
     }
 
     public User getMockUser() {
-        User u = new User();
-        u.setId(ID);
-        u.setEmail(EMAIL);
-        u.setName(NAME);
-        u.setPassword(PASSWORD);
+        User user = new User();
+        user.setId(ID);
+        user.setEmail(EMAIL);
+        user.setName(NAME);
+        user.setPassword(PASSWORD);
+        user.setRole(RoleEnum.ROLE_DEFAULT);
 
-        return u;
+        return user;
     }
 
     public String getJsonPayload(Long id, String email, String name, String password) throws JsonProcessingException {
@@ -85,6 +87,7 @@ public class UserControllerTest {
         dto.setEmail(email);
         dto.setName(name);
         dto.setPassword(password);
+        dto.setRole(RoleEnum.ROLE_DEFAULT.toString());
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(MapperFeature.USE_ANNOTATIONS);

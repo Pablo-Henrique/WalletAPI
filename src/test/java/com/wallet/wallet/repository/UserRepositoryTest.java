@@ -1,7 +1,7 @@
 package com.wallet.wallet.repository;
 
+import com.wallet.wallet.enums.RoleEnum;
 import com.wallet.wallet.models.User;
-import com.wallet.wallet.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +33,7 @@ public class UserRepositoryTest {
         user.setName("Set up User");
         user.setPassword("Senha123");
         user.setEmail(EMAIL);
+        user.setRole(RoleEnum.ROLE_DEFAULT);
 
         userRepository.save(user);
     }
@@ -49,6 +50,7 @@ public class UserRepositoryTest {
         user.setName("Test");
         user.setEmail("test@gmail.com");
         user.setPassword("15221");
+        user.setRole(RoleEnum.ROLE_DEFAULT);
 
         User response = userRepository.save(user);
         assertNotNull(response);
