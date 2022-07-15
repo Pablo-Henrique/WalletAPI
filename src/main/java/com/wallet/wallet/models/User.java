@@ -1,5 +1,6 @@
 package com.wallet.wallet.models;
 
+import com.wallet.wallet.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,17 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoleEnum role;
+
+    public RoleEnum getRole(){
+        if (role == null) {
+            return role = RoleEnum.ROLE_DEFAULT;
+        }
+        return role;
+    }
 
     @Override
     public boolean equals(Object o) {
