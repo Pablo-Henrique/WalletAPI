@@ -1,4 +1,3 @@
-
 # Wallet Manager 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/Pablo-Henrique/WalletAPI/blob/master/LICENSE) 
 [![Build Status](https://travis-ci.org/azu/travis-badge.svg?branch=master)](https://travis-ci.org/Pablo-Henrique/WalletAPI)
@@ -66,7 +65,7 @@ Para fazer requisições aos demais endpoints da api deve-se criar um usuário. 
 
 ## Após cadastrado
 
-Agora você podera autenticar seu usuário e obter o token de acesso do tipo Bearer. Acesse o endpoin /auth e faça o login utilizando o email e senha do usuário cadastrado.
+Agora você podera autenticar seu usuário e obter o token de acesso do tipo Bearer. Acesse o endpoint /auth e faça o login utilizando o email e senha do usuário cadastrado.
 
 ### Exemplo:
 ```Json
