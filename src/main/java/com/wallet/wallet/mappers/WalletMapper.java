@@ -4,7 +4,6 @@ import com.wallet.wallet.dtos.WalletDto;
 import com.wallet.wallet.models.Wallet;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,16 +25,9 @@ public class WalletMapper {
         return modelMapper.map(entity, WalletDto.class);
     }
 
-    public List<WalletDto> listConveterEntityToDto(List<Wallet>  wallets){
+    public List<WalletDto> listConverterEntityToDto(List<Wallet>  wallets){
         List<WalletDto> walletDtos = new ArrayList<>();
-        BeanUtils.copyProperties(wallets, walletDtos);
+        wallets.forEach(elements -> walletDtos.add(converterEntityToDto(elements)));
         return walletDtos;
-    }
-
-    public WalletDto response(Wallet wallet) {
-        WalletDto walletDto = new WalletDto();
-        walletDto.setName(wallet.getName());
-        walletDto.setValue(wallet.getValue());
-        return walletDto;
     }
 }

@@ -43,7 +43,7 @@ public class WalletController {
     public ResponseEntity<Response<List<WalletDto>>> findAll() {
         Response<List<WalletDto>> response = new Response<>();
 
-        List<WalletDto> wallets = mapper.listConveterEntityToDto(walletService.findAll());
+        List<WalletDto> wallets = mapper.listConverterEntityToDto(walletService.findAll());
         response.setData(wallets);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

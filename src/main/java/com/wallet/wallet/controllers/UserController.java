@@ -1,6 +1,7 @@
 package com.wallet.wallet.controllers;
 
 
+import com.wallet.wallet.exceptions.ResourceNotFoundException;
 import com.wallet.wallet.dtos.UserDto;
 import com.wallet.wallet.mappers.UserMapper;
 import com.wallet.wallet.models.User;
@@ -44,6 +45,14 @@ public class UserController {
     public ResponseEntity<Response<List<UserDto>>> findAll() {
         Response<List<UserDto>> response = new Response<>();
         response.setData(mapper.converterListEntityToDto(userService.findAll()));
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Response<UserDto>> findById(@PathVariable(value = "id") Long id) {
+        Response<UserDto> response = new Response<>();
+        User user = userService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+        response.setData(mapper.converterEntityToDto(user));
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
