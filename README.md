@@ -1,11 +1,10 @@
-
 # Wallet Manager 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/Pablo-Henrique/WalletAPI/blob/master/LICENSE) 
 [![Build Status](https://travis-ci.org/azu/travis-badge.svg?branch=master)](https://travis-ci.org/Pablo-Henrique/WalletAPI)
 
 # Sobre o projeto
 
-Wallet Manager é uma aplicação back-end construída durante meu aprendizado sobre Spring-boot, utilizando APi RESTFull utilizando TDD, CI E CD.
+Wallet Manager é uma aplicação back-end construída durante meu aprendizado sobre Spring-boot, utilizando APi RESTFull, TDD, CI E CD.
 
 A aplicação consiste em uma API de gerenciamento de carteiras, onde os usuarios poderão criar, modificar, deletar e inserir dados de maneira individual de uma carteira.  
 
@@ -66,7 +65,7 @@ Para fazer requisições aos demais endpoints da api deve-se criar um usuário. 
 
 ## Após cadastrado
 
-Agora você podera autenticar seu usuário e obter o token de acesso do tipo Bearer. Acesse o endpoin /auth e faça o login utilizando o email e senha do usuário cadastrado.
+Agora você podera autenticar seu usuário e obter o token de acesso do tipo Bearer. Acesse o endpoint /auth e faça o login utilizando o email e senha do usuário cadastrado.
 
 ### Exemplo:
 ```Json
@@ -79,10 +78,10 @@ Agora você podera autenticar seu usuário e obter o token de acesso do tipo Bea
 
 
 # Executando todos os testes
-você podera executar os teste utilizando o seguinte comando no terminal dentro 
+você podera executar os teste utilizando o seguinte comando no terminal dentro da pasta do projeto
 
 ```bash
-./mvnw test
+mvn test
 ```
 
 # Documentação
@@ -94,7 +93,7 @@ http://localhost:8080/swagger-ui.html
 
 - API estará disponivel na cloud do heroku: https://walletmanager-api.herokuapp.com/
 
-"Acesse a documentação para obter as rotas disponível"
+"Acesse a documentação para obter as rotas disponível https://walletmanager-api.herokuapp.com/swagger-ui.html"
 # Autor
 
 - Pablo Henrique Anselmo
