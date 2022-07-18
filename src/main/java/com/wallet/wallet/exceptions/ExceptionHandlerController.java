@@ -1,5 +1,6 @@
 package com.wallet.wallet.exceptions;
 
+import com.wallet.wallet.exceptions.ex.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

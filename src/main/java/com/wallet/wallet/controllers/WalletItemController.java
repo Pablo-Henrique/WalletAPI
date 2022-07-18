@@ -2,14 +2,13 @@ package com.wallet.wallet.controllers;
 
 import com.wallet.wallet.dtos.WalletItemDto;
 import com.wallet.wallet.enums.TypeEnum;
+import com.wallet.wallet.mappers.WalletItemMapper;
 import com.wallet.wallet.models.UserWallet;
-import com.wallet.wallet.models.Wallet;
 import com.wallet.wallet.models.WalletItem;
 import com.wallet.wallet.responses.Response;
 import com.wallet.wallet.services.UserWalletService;
 import com.wallet.wallet.services.WalletItemService;
 import com.wallet.wallet.util.RestrictByUserUtil;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +39,7 @@ public class WalletItemController {
     private UserWalletService userWalletService;
 
     @Autowired
-    private ModelMapper mapper;
+    private WalletItemMapper mapper;
 
     private static final Logger log = LoggerFactory.getLogger(WalletItemController.class);
 
@@ -52,8 +52,8 @@ public class WalletItemController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        WalletItem walletItem = walletItemService.save(convertDtoToEntity(dto));
-        response.setData(convertEntityToDto(walletItem));
+        WalletItem walletItem = walletItemService.save(mapper.convertDtoToEntity(dto));
+        response.setData(mapper.convertEntityToDto(walletItem));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -69,13 +69,13 @@ public class WalletItemController {
 
         Optional<UserWallet> userWallet = userWalletService.findByUserIdAndWalletId(RestrictByUserUtil.getAuthenticatedUserId(), wallet);
 
-        if (!userWallet.isPresent()) {
+        if (userWallet.isEmpty()) {
             response.getErrors().add("Você não tem acesso a essa carteira");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
         Page<WalletItem> items = walletItemService.findBetweenDates(wallet, startDate, endDate, page);
-        Page<WalletItemDto> dto = items.map(this::convertEntityToDto);
+        Page<WalletItemDto> dto = items.map(walletItem -> mapper.convertEntityToDto(walletItem));
 
         response.setData(dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -84,14 +84,13 @@ public class WalletItemController {
     @GetMapping(path = "/type/{wallet}")
     public ResponseEntity<Response<List<WalletItemDto>>> findByWalletAndType(@PathVariable(value = "wallet") Long wallet,
                                                                              @RequestParam("type") String type) {
-
         log.info("Buscando por carteira {} e tipo {}", wallet, type);
-
         Response<List<WalletItemDto>> response = new Response<>();
+
         List<WalletItem> walletItems = walletItemService.findByWalletAndType(wallet, TypeEnum.getEnum(type));
 
         List<WalletItemDto> dto = new ArrayList<>();
-        walletItems.forEach(items -> dto.add(convertEntityToDto(items)));
+        walletItems.forEach(items -> dto.add(mapper.convertEntityToDto(items)));
 
         response.setData(dto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -122,12 +121,13 @@ public class WalletItemController {
             result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-        WalletItem newWalletItem = walletItemService.save(convertDtoToEntity(dto));
-        response.setData(convertEntityToDto(newWalletItem));
+        WalletItem newWalletItem = walletItemService.save(mapper.convertDtoToEntity(dto));
+        response.setData(mapper.convertEntityToDto(newWalletItem));
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(path = "/{walletItemId}")
     public ResponseEntity<Response<String>> delete(@PathVariable(value = "walletItemId") Long walletItemId) {
         Response<String> response = new Response<>();
@@ -144,31 +144,4 @@ public class WalletItemController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-
-    private WalletItem convertDtoToEntity(WalletItemDto dto) {
-        WalletItem wi = new WalletItem();
-        wi.setDate(dto.getDate());
-        wi.setDescription(dto.getDescription());
-        wi.setId(dto.getId());
-        wi.setType(TypeEnum.getEnum(dto.getType()));
-        wi.setValue(dto.getValue());
-
-        Wallet w = new Wallet();
-        w.setId(dto.getWallet());
-        wi.setWallet(w);
-
-        return wi;
-    }
-
-    private WalletItemDto convertEntityToDto(WalletItem wi) {
-        WalletItemDto dto = new WalletItemDto();
-        dto.setDate(wi.getDate());
-        dto.setDescription(wi.getDescription());
-        dto.setId(wi.getId());
-        dto.setType(wi.getType().getValue());
-        dto.setValue(wi.getValue());
-        dto.setWallet(wi.getWallet().getId());
-
-        return dto;
-    }
 }

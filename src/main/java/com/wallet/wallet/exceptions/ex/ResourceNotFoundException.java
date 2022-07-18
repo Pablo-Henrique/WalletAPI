@@ -1,4 +1,4 @@
-package com.wallet.wallet.exceptions;
+package com.wallet.wallet.exceptions.ex;
 
 public class ResourceNotFoundException extends RuntimeException{
 

@@ -1,6 +1,7 @@
 package com.wallet.wallet.mappers;
 
 import com.wallet.wallet.dtos.UserDto;
+import com.wallet.wallet.enums.RoleEnum;
 import com.wallet.wallet.models.User;
 import com.wallet.wallet.util.Bcrypt;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class UserMapper {
 
     public User converterDtoToEntity(UserDto dto) {
         dto.setPassword(Bcrypt.getHash(dto.getPassword()));
+        dto.setRole((dto.getRole()) == null ? RoleEnum.ROLE_DEFAULT.toString() : dto.getRole());
         return modelMapper.map(dto, User.class);
     }
 

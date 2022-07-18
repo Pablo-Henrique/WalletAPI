@@ -1,7 +1,7 @@
 package com.wallet.wallet.controllers;
 
 
-import com.wallet.wallet.exceptions.ResourceNotFoundException;
+import com.wallet.wallet.exceptions.ex.ResourceNotFoundException;
 import com.wallet.wallet.dtos.UserDto;
 import com.wallet.wallet.mappers.UserMapper;
 import com.wallet.wallet.models.User;

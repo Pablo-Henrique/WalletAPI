@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +55,7 @@ public class WalletItemServiceImpl implements WalletItemService {
         return walletItemRepository.findById(id);
     }
 
+    @Transactional
     @CacheEvict(value = "findByWalletAndType", allEntries = true)
     @Override
     public void deleteById(Long id) {
