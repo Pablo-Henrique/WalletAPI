@@ -69,7 +69,7 @@ public class WalletItemController {
 
         Optional<UserWallet> userWallet = userWalletService.findByUserIdAndWalletId(RestrictByUserUtil.getAuthenticatedUserId(), wallet);
 
-        if (userWallet.isEmpty()) {
+        if (userWallet.isPresent()) {
             response.getErrors().add("Você não tem acesso a essa carteira");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
