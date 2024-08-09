@@ -85,8 +85,8 @@ mvn test
 ```
 
 # Documentação
-- Utilize a interface do Swagger para ter acesso a documentação dos endpoints, ela está disponível na url: 
-http://localhost:8080/swagger-ui.html
+- Utilize a interface do Swagger para ter acesso a documentação dos endpoints: 
+
 
 
 # Heroku
